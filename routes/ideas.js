@@ -9,10 +9,10 @@ const Idea = mongoose.model('ideas');
 // Idea Index Page
 router.get('/', (req, res) => {
   Idea.find({})
-    .sort({date:'desc'})
+    .sort({ date: 'desc' })
     .then(ideas => {
       res.render('ideas/index', {
-        ideas:ideas
+        ideas: ideas
       });
     });
 });
@@ -27,25 +27,25 @@ router.get('/edit/:id', (req, res) => {
   Idea.findOne({
     _id: req.params.id
   })
-  .then(idea => {
-    res.render('ideas/edit', {
-      idea:idea
+    .then(idea => {
+      res.render('ideas/edit', {
+        idea: idea
+      });
     });
-  });
 });
 
 // Process Form
 router.post('/', (req, res) => {
   let errors = [];
 
-  if(!req.body.title){
-    errors.push({text:'Please add a title'});
+  if (!req.body.title) {
+    errors.push({ text: 'Please add a title' });
   }
-  if(!req.body.details){
-    errors.push({text:'Please add some details'});
+  if (!req.body.details) {
+    errors.push({ text: 'Please add some details' });
   }
 
-  if(errors.length > 0){
+  if (errors.length > 0) {
     res.render('/add', {
       errors: errors,
       title: req.body.title,
@@ -70,22 +70,22 @@ router.put('/:id', (req, res) => {
   Idea.findOne({
     _id: req.params.id
   })
-  .then(idea => {
-    // new values
-    idea.title = req.body.title;
-    idea.details = req.body.details;
+    .then(idea => {
+      // new values
+      idea.title = req.body.title;
+      idea.details = req.body.details;
 
-    idea.save()
-      .then(idea => {
-        req.flash('success_msg', 'Video idea updated');
-        res.redirect('/ideas');
-      })
-  });
+      idea.save()
+        .then(idea => {
+          req.flash('success_msg', 'Video idea updated');
+          res.redirect('/ideas');
+        })
+    });
 });
 
 // Delete Idea
 router.delete('/:id', (req, res) => {
-  Idea.remove({_id: req.params.id})
+  Idea.remove({ _id: req.params.id })
     .then(() => {
       req.flash('success_msg', 'Video idea removed');
       res.redirect('/ideas');
