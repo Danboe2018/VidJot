@@ -4,4 +4,6 @@ const app = express();
 
 const port = 5000;
 
-app.listen();
+app.listen(port, () => {
+  console.log(`Server stared in port ${port}`)
+});
