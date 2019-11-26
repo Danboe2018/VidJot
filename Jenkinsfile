@@ -17,6 +17,7 @@ pipeline {
             steps {
                 wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
                     echo 'Building...'
+                    sh 'nodemon'
                 }
             }
         }
